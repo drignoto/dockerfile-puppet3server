@@ -2,6 +2,7 @@ FROM debian
 MAINTAINER Antonio Xanxess <dr.ignoto@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 ENV FQDN testpuppet.example
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN apt-get update
 
 RUN echo "locales locales/locales_to_be_generated multiselect es_ES.UTF-8 UTF-8" | debconf-set-selections &&\
@@ -20,6 +21,10 @@ COPY puppetmaster.conf /etc/apache2/sites-available/
 
 EXPOSE 8140
 
-ENTRYPOINT ["entrypoint.sh"]
+ADD entrypoint.sh /entrypoint.sh
 
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+RUN chmod a+x /entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
+
+#CMD ["apache2ctl", "-D", "FOREGROUND"]
