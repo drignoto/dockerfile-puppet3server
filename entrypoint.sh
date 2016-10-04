@@ -1,5 +1,9 @@
 #!/bin/bash
 
+/usr/bin/puppet cert list -a
+
+/usr/bin/puppet master --no-daemonize -o
+
 /bin/sed -i "s/testpuppet.example/$FQDN/g" /etc/apache2/sites-available/puppetmaster.conf
 
-/usr/sbin/apache2ctl -D FOREGROUND
+exec /usr/sbin/apache2ctl "$@"

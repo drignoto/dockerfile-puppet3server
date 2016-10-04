@@ -1,6 +1,7 @@
 FROM debian
 MAINTAINER Antonio Xanxess <dr.ignoto@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
+ENV HOSTNAME puppet
 ENV FQDN testpuppet.example
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN apt-get update
@@ -19,12 +20,12 @@ RUN wget http://apt.puppetlabs.com/puppetlabs-release-jessie.deb && dpkg -i pupp
 
 COPY puppetmaster.conf /etc/apache2/sites-available/
 
+COPY entrypoint.sh /
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
 EXPOSE 8140
 
-ADD entrypoint.sh /entrypoint.sh
-
-RUN chmod a+x /entrypoint.sh
-
-ENTRYPOINT ["./entrypoint.sh"]
-
-#CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["-D", "FOREGROUND"]
