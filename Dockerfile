@@ -16,7 +16,7 @@ ENV LC_ALL es_ES.UTF-8
 RUN wget http://apt.puppetlabs.com/puppetlabs-release-jessie.deb && dpkg -i puppetlabs-release-jessie.deb && apt-get update && apt-get install -y \
     puppet \
     puppetmaster-passenger \
-    subversion
+    subversion \
     && apt-get clean
 
 COPY puppetmaster.conf /etc/apache2/sites-available/
