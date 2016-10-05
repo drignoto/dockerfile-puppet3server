@@ -1,5 +1,7 @@
 #!/bin/bash
 
+/bin/rm -rf /var/lib/puppet/ssl
+
 /usr/bin/puppet cert list -a
 
 /usr/bin/puppet master --no-daemonize -o
